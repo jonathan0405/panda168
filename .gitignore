@@ -1,0 +1,8 @@
+__pycache__/
+backup/
+log-ponyorm.log
+picklatest.py
+privatedata.py
+test/
+venv/
+price_data/
