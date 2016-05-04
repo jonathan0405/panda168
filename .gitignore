@@ -1,6 +1,7 @@
+*.py[oc]/
 __pycache__/
 backup/
-log-ponyorm.log
+*.log
 picklatest.py
 privatedata.py
 test/

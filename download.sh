@@ -32,7 +32,7 @@ then
 		wget -O /home/jonathan/project/price_data/${company}-${year}${month}${day} ${url}
 	done
 fi
-python database.py
+`python database.py`
 
 if [ "$#" != "0" ]
 then

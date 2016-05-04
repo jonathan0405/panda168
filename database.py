@@ -1,6 +1,6 @@
 from datetime import date
 from pony.orm import *
-from privatedata import *
+from privatedata import dbpassword
 import os
 import csv
 
@@ -10,30 +10,29 @@ def searchfile():
     for root, dirs, files in os.walk(top, topdown=False):
         for name in files:
             newcsvfile = (os.path.join(root, name))
-            company = name[:-9]
-            readfile(newcsvfile, company)
+            company_ = name[:-9]
+            readfile(newcsvfile, company_)
             os.remove(newcsvfile)
 
 
-def readfile(newcsvfile, company):
+def readfile(newcsvfile, company_):
     print(newcsvfile)
     with open(newcsvfile) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            date = row['Date']
-            Open = row['Open']
-            high = row['High']
-            low = row['Low']
-            close = row['Close']
-            volume = row['Volume']
-            adjust = row['Adj Close']
-            add_price(company, date, Open, high,
-                       low, close, volume, adjust)
+            date_ = row['Date']
+            Open_ = row['Open']
+            high_ = row['High']
+            low_ = row['Low']
+            close_ = row['Close']
+            volume_ = row['Volume']
+            adjust_ = row['Adj Close']
+            add_price(company_, date_, Open_, high_,
+                      low_, close_, volume_, adjust_)
 
 
 def main():
     global db, Price
-    getpw()
     db = Database()
     class Price(db.Entity):
         company = Required(str)
@@ -44,15 +43,16 @@ def main():
         close = Required(float)
         volume = Required(int)
         adjust = Required(float)
-    db.bind('mysql', host='localhost', user='price', passwd=dbpassword, db='price')
+    db.bind('mysql', host='localhost', user='price',
+            passwd=dbpassword, db='price')
     db.generate_mapping(create_tables=True)
     searchfile()
 
 
 @db_session
-def add_price(company, date, open, high, low, close, volume, adjust):
-    Price(company=company, date=date, open=open, high=high, 
-          low=low, close=close, volume=volume,  adjust=adjust)
+def add_price(company_, date_, open_, high_, low_, close_, volume_, adjust_):
+    Price(company=company_, date=date_, open=open_, high=high_,
+          low=low_, close=close_, volume=volume_,  adjust=adjust_)
 
 
 if __name__ == '__main__':
