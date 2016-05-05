@@ -1,5 +1,4 @@
-*.py[oc]/
-__pycache__/
+*.py[oc]
 backup/
 *.log
 picklatest.py
